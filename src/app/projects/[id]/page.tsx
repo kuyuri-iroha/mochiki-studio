@@ -2,16 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import parse from "html-react-parser";
+import type { ImageAsset } from "@/lib/microcms";
 import { getProjectById, getProjects } from "@/lib/microcms";
-
-type PageParams = Promise<{ id: string }> | { id: string };
 
 export async function generateStaticParams() {
   const projects = await getProjects({ fields: "id" });
   return projects.map(({ id }) => ({ id }));
 }
 
-export default async function ProjectDetailPage({ params }: { params: PageParams }) {
+export default async function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const project = await getProjectById(id);
 
@@ -21,11 +20,15 @@ export default async function ProjectDetailPage({ params }: { params: PageParams
 
   const description = project.description ? parse(project.description) : null;
 
-  const hasGallery = (project.images?.length ?? 0) > 0;
+  const galleryImages = (project.images ?? []).filter(
+    (image: ImageAsset | undefined): image is ImageAsset => Boolean(image?.url)
+  );
+
+  const hasGallery = galleryImages.length > 0;
 
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 pb-20 pt-8 sm:px-6 lg:flex-row">
-      <aside className="order-last flex flex-1 flex-col gap-6 border border-slate-800/40 bg-slate-950/30 p-6 text-slate-100 shadow-sm lg:order-first lg:max-w-xs lg:flex-none">
+      <aside className="order-last flex flex-1 flex-col gap-6 border border-slate-200 bg-white/90 p-6 text-slate-700 shadow-sm lg:order-first lg:max-w-xs lg:flex-none">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 underline-offset-4 hover:underline dark:text-blue-300"
@@ -52,9 +55,9 @@ export default async function ProjectDetailPage({ params }: { params: PageParams
               </span>
             )}
           </div>
-          <h1 className="text-3xl font-bold text-white">{project.title}</h1>
+          <h1 className="text-3xl font-bold text-slate-900">{project.title}</h1>
           {description && (
-            <div className="space-y-4 text-sm leading-relaxed text-slate-200 [&_a]:text-blue-400 [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-blue-300">
+            <div className="space-y-4 text-sm leading-relaxed text-slate-600 [&_a]:text-blue-600 [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-blue-500">
               {description}
             </div>
           )}
@@ -66,8 +69,8 @@ export default async function ProjectDetailPage({ params }: { params: PageParams
               ジャンル
             </h2>
             <div className="flex flex-wrap gap-2">
-              {project.genre?.map((genre) => (
-                <span key={genre} className="px-3 py-1 text-xs font-medium text-blue-300">
+              {project.genre?.map((genre: string) => (
+                <span key={genre} className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
                   {genre}
                 </span>
               ))}
@@ -81,8 +84,8 @@ export default async function ProjectDetailPage({ params }: { params: PageParams
               使用技術
             </h2>
             <div className="flex flex-wrap gap-2">
-              {project.skill?.map((skill) => (
-                <span key={skill} className="px-3 py-1 text-xs font-medium text-slate-300">
+              {project.skill?.map((skill: string) => (
+                <span key={skill} className="rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600">
                   {skill}
                 </span>
               ))}
@@ -97,7 +100,7 @@ export default async function ProjectDetailPage({ params }: { params: PageParams
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border border-blue-500/50 px-4 py-2 text-sm font-semibold text-blue-200 transition hover:bg-blue-500/10"
+                className="inline-flex items-center gap-2 rounded-full border border-blue-300 px-4 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-50"
               >
                 サイトを見る
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
@@ -111,7 +114,7 @@ export default async function ProjectDetailPage({ params }: { params: PageParams
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border border-slate-500 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-slate-300"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-400"
               >
                 GitHub
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
@@ -127,47 +130,58 @@ export default async function ProjectDetailPage({ params }: { params: PageParams
         )}
       </aside>
 
-      <article className="flex flex-1 flex-col gap-8">
-        {project.mainVisual && (
-          <figure className="relative max-h-[65vh] w-full overflow-hidden border border-slate-800/60 bg-slate-950/50">
-            <Image
-              src={project.mainVisual.url}
-              alt={project.title}
-              width={project.mainVisual.width ?? 1920}
-              height={project.mainVisual.height ?? 1080}
-              sizes="100vw"
-              className="h-auto w-full object-contain"
-              priority
-            />
-          </figure>
-        )}
-
-        {hasGallery && (
-          <section className="columns-1 gap-3 sm:columns-2">
-            {project.images?.map((image, index) => (
-              <figure
-                key={`${image.url}-${index}`}
-                className="relative mb-3 flex flex-col gap-3 border border-slate-800/50 bg-slate-950/30 p-3 transition hover:-translate-y-[2px] hover:border-slate-600"
+      <article className="flex-1">
+        <div className="masonry columns-1 sm:columns-2">
+          {project.mainVisual && (
+            <figure
+              className="mb-4 break-inside-avoid border border-slate-200 bg-white/95 p-4 shadow-lg transition hover:-translate-y-[4px] hover:shadow-xl"
+              style={{ columnSpan: "all" }}
+            >
+              <div
+                className="relative mx-auto w-full overflow-hidden bg-white"
+                style={{
+                  aspectRatio:
+                    project.mainVisual.width && project.mainVisual.height
+                      ? `${project.mainVisual.width} / ${project.mainVisual.height}`
+                      : "4 / 3",
+                }}
               >
-                <div
-                  className="relative w-full overflow-hidden bg-slate-900"
-                  style={{
-                    aspectRatio:
-                      image.width && image.height ? `${image.width} / ${image.height}` : "4 / 3",
-                  }}
-                >
-                  <Image
-                    src={image.url}
-                    alt={`${project.title} - 画像 ${index + 1}`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-contain"
-                  />
-                </div>
-              </figure>
-            ))}
-          </section>
-        )}
+                <Image
+                  src={project.mainVisual.url}
+                  alt={project.title}
+                  width={project.mainVisual.width ?? 1920}
+                  height={project.mainVisual.height ?? 1080}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                  className="mx-auto h-auto w-full max-w-[min(90vw,1200px)] object-contain"
+                  priority
+                />
+              </div>
+            </figure>
+          )}
+
+          {galleryImages.map((image: ImageAsset, index: number) => (
+            <figure
+              key={`${image.url}-${index}`}
+              className="mb-4 break-inside-avoid border border-slate-200 bg-white/90 p-3 shadow-sm transition hover:-translate-y-[2px] hover:shadow-lg"
+            >
+              <div
+                className="relative w-full overflow-hidden bg-white"
+                style={{
+                  aspectRatio:
+                    image.width && image.height ? `${image.width} / ${image.height}` : "4 / 3",
+                }}
+              >
+                <Image
+                  src={image.url}
+                  alt={`${project.title} - 画像 ${index + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-contain"
+                />
+              </div>
+            </figure>
+          ))}
+        </div>
       </article>
     </div>
   );

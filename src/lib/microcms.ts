@@ -50,7 +50,7 @@ type AboutFields = {
   icon?: ImageAsset;
 };
 
-export type About = MicroCMSObjectContent<AboutFields> & {
+export type About = MicroCMSObjectContent & AboutFields & {
   workContent?: string;
   workDescription?: string;
   overviewDesc?: string;
@@ -68,7 +68,7 @@ type ProjectFields = {
   github?: string;
 };
 
-type ProjectResponse = MicroCMSListContent<ProjectFields>;
+type ProjectResponse = MicroCMSListContent & ProjectFields;
 
 export type Project = ProjectResponse & {
   mainVisual?: ImageAsset;
