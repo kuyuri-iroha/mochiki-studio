@@ -1,7 +1,8 @@
 export default function Loading() {
   return (
-    <div className="flex min-h-[60vh] items-center justify-center">
-      <div className="h-10 w-10 animate-spin rounded-full border-2 border-slate-300 border-t-slate-900 dark:border-slate-700 dark:border-t-slate-200" />
+    <div className="min-h-[70vh] flex flex-col items-center justify-center">
+      <div className="w-16 h-16 border-4 border-muted border-t-foreground rounded-full animate-spin" />
+      <p className="mt-4 text-muted-foreground">読み込み中...</p>
     </div>
   );
 }

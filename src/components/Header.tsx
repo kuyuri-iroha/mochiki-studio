@@ -1,17 +1,7 @@
-import { getAbout } from "@/lib/microcms";
-import AboutOverlay from "./AboutOverlay";
-
-export default async function Header() {
-  const about = await getAbout();
-
+export default function Header() {
   return (
-    <header className="relative w-full px-6 py-6">
-      <AboutOverlay about={about} />
-      <div className="mx-auto flex max-w-6xl items-center justify-center">
-        <span className="text-xl font-semibold tracking-wide text-slate-900 dark:text-slate-100">
-          Mochiki Studio
-        </span>
-      </div>
+    <header className="w-full py-4 px-6 md:px-12 bg-background">
+      <div className="max-w-6xl mx-auto" />
     </header>
   );
 }

@@ -10,80 +10,70 @@ type Props = {
 export default function ProjectCard({ project }: Props) {
   const image = project.mainVisual;
   const description = project.description ? stripHtml(project.description) : "";
-  const aspectRatio = image?.width && image?.height ? `${image.width} / ${image.height}` : "4 / 3";
-  const dateLabel = project.date
-    ? new Date(project.date).toLocaleDateString("ja-JP", {
-        year: "numeric",
-        month: "short",
-      })
-    : null;
+  const year = project.date ? new Date(project.date).getFullYear() : null;
 
   return (
-    <Link
-      href={`/projects/${project.id}`}
-      className="group block border border-white/80 bg-white/95 shadow-sm transition hover:-translate-y-[2px] hover:shadow-lg"
-    >
-      <article>
-        <div className="relative w-full overflow-hidden bg-white" style={{ aspectRatio }}>
+    <Link href={`/projects/${project.id}`} className="group block h-full">
+      <div className="glass-panel rounded-2xl overflow-hidden h-full hover:bg-foreground/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/5 dark:hover:shadow-white/5 flex flex-col border border-border">
+        <div className="relative h-56 w-full overflow-hidden">
           {image ? (
             <Image
               src={image.url}
               alt={project.title}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-contain"
               priority
+              className="object-cover transition-transform duration-700 group-hover:scale-110"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center text-sm text-slate-400">
-              No image
+            <div className="w-full h-full bg-gray-200 dark:bg-gray-900 flex items-center justify-center">
+              <span className="text-gray-400 dark:text-gray-600 font-mono">NO VISUAL</span>
             </div>
           )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-80" />
 
-          <div className="pointer-events-none absolute inset-0 z-10 opacity-90 transition-opacity duration-300 group-hover:opacity-100 sm:opacity-0">
-            <span className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/10 to-white/85" />
-            <div className="relative flex h-full flex-col justify-between p-6">
-              <div className="space-y-2 text-slate-800">
-                {dateLabel && (
-                  <span className="inline-flex rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-slate-600">
-                    {dateLabel}
+          <div className="absolute bottom-4 left-4 right-4">
+            {project.genre && project.genre.length > 0 && (
+              <div className="flex flex-wrap gap-1 mb-2">
+                {project.genre.slice(0, 2).map((g: string) => (
+                  <span
+                    key={g}
+                    className="px-2 py-0.5 text-[10px] uppercase tracking-wider bg-black/30 backdrop-blur-md text-white/90 rounded border border-white/10"
+                  >
+                    {g}
                   </span>
-                )}
-                <h3 className="text-lg font-semibold leading-tight">{project.title}</h3>
-                {description && (
-                  <p className="text-sm leading-relaxed text-slate-600">
-                    {description.length > 120 ? `${description.slice(0, 117)}...` : description}
-                  </p>
-                )}
+                ))}
               </div>
+            )}
+            <h3 className="text-xl font-bold text-white leading-tight group-hover:text-gray-200 transition-colors">
+              {project.title}
+            </h3>
+          </div>
+        </div>
 
-              <div className="space-y-2 text-xs text-slate-600">
-                <div className="flex flex-wrap gap-2">
-                  {project.genre?.map((tag: string) => (
-                    <span
-                      key={`genre-${tag}`}
-                      className="rounded-full border border-slate-300 px-3 py-1 font-medium"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                  {project.skill?.map((tag: string) => (
-                    <span
-                      key={`skill-${tag}`}
-                      className="rounded-full border border-slate-200 px-3 py-1 font-medium"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className="text-right text-sm font-semibold tracking-wide text-slate-700">
-                  詳細を見る →
-                </div>
-              </div>
+        <div className="p-5 flex flex-col flex-grow">
+          <div className="flex items-center gap-2 text-xs text-muted font-mono mb-4">
+            <span>{year ?? "---"}</span>
+          </div>
+
+          {description && (
+            <p className="text-sm text-muted-foreground line-clamp-3 mb-4 leading-relaxed flex-grow">
+              {description}
+            </p>
+          )}
+
+          <div className="pt-4 border-t border-border mt-auto">
+            <div className="flex flex-wrap gap-2">
+              {project.skill && project.skill.length > 0 && (
+                <span className="text-xs text-muted-foreground/80">
+                  {project.skill.slice(0, 3).join(", ")}
+                  {project.skill.length > 3 && "..."}
+                </span>
+              )}
             </div>
           </div>
         </div>
-      </article>
+      </div>
     </Link>
   );
 }

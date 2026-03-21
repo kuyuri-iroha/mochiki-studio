@@ -1,17 +1,12 @@
 export default function Footer() {
-  const year = new Date().getFullYear();
-
   return (
-    <footer
-      className="mt-16 w-full border-t border-slate-200 bg-white/80 px-6 py-8"
-      style={{
-        backgroundImage: "url(/background.jpg)",
-        backgroundSize: "400px 400px",
-        backgroundRepeat: "repeat",
-      }}
-    >
-      <div className="mx-auto max-w-6xl text-center text-sm text-slate-600">
-        &copy; {year} Mochiki Studio. All rights reserved.
+    <footer className="w-full py-6 px-6 md:px-12 bg-background border-t border-gray-200 dark:border-gray-800">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center">
+          <p className="text-sm">
+            &copy; {new Date().getFullYear()} Mochiki Studio. All rights reserved.
+          </p>
+        </div>
       </div>
     </footer>
   );

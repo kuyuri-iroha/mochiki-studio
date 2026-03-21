@@ -2,16 +2,17 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="mx-auto flex min-h-[70vh] w-full max-w-3xl flex-col items-center justify-center gap-6 px-6 text-center">
-      <h1 className="text-4xl font-bold text-slate-900 dark:text-white">ページが見つかりません</h1>
-      <p className="text-sm text-slate-600 dark:text-slate-300">
-        指定されたコンテンツは存在しないか、公開されていません。
+    <div className="min-h-[70vh] flex flex-col items-center justify-center px-6 py-12">
+      <h1 className="text-6xl font-bold mb-4">404</h1>
+      <h2 className="text-2xl font-semibold mb-6">ページが見つかりません</h2>
+      <p className="text-muted-foreground mb-8 text-center max-w-md">
+        お探しのページは存在しないか、移動または削除された可能性があります。
       </p>
       <Link
         href="/"
-        className="rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200"
+        className="px-6 py-3 bg-foreground text-background rounded-md hover:opacity-90 transition-opacity"
       >
-        トップページに戻る
+        ホームに戻る
       </Link>
     </div>
   );
