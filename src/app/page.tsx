@@ -23,42 +23,22 @@ export default async function HomePage() {
   return (
     <div className="pb-20">
       {/* Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-border">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {heroImages.length > 0 && <HeroSlideshow images={heroImages} />}
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background z-10 pointer-events-none" />
 
-        <div className="relative z-20 text-center max-w-5xl mx-auto px-6 space-y-8">
-          <div className="space-y-4">
-            <p className="text-muted-foreground text-sm md:text-base font-bold tracking-[0.4em] uppercase">
-              Creative Studio
-            </p>
-            <h1 className="font-bold text-foreground tracking-tight leading-none flex flex-col items-center">
-              <span className="text-5xl md:text-8xl">{about.name}</span>
-            </h1>
-          </div>
-
-          {about.overview && (
-            <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground leading-relaxed">
-              {about.overview}
-            </p>
-          )}
-
-          <div className="pt-8">
-            <Link
-              href="#projects"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-foreground text-background rounded-full font-bold hover:bg-muted-foreground transition-colors shadow-lg shadow-foreground/20"
-            >
-              View Projects
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </Link>
-          </div>
+        <div className="relative z-20 text-center px-6">
+          <h1
+            className="text-white font-light tracking-[0.3em] uppercase leading-relaxed"
+            style={{ fontFamily: "var(--font-light)" }}
+          >
+            <span className="block text-4xl md:text-6xl lg:text-7xl">
+              {about.orgNameEn ?? "MOCHIKI STUDIO"}
+            </span>
+            <span className="block text-2xl md:text-4xl lg:text-5xl mt-2">
+              {about.nameEn ?? "CHIKAKO MOCHIKI"}
+            </span>
+          </h1>
+          <div className="mx-auto mt-8 w-48 md:w-64 border-t border-white/60" />
         </div>
       </section>
 
@@ -78,7 +58,9 @@ export default async function HomePage() {
               </div>
             )}
             <div className="text-center md:text-left space-y-4">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground">{about.name}</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                {about.orgName ?? about.name}
+              </h2>
               {summaryText && (
                 <p className="text-muted-foreground leading-relaxed">
                   {summaryText}

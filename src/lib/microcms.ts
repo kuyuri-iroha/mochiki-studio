@@ -40,6 +40,9 @@ export type ImageAsset = MicroCMSImage;
 
 type AboutFields = {
   name: string;
+  "name-en"?: string;
+  "org-name"?: string;
+  "org-name-en"?: string;
   description?: string;
   "work-content"?: string;
   "work-description"?: string;
@@ -50,6 +53,9 @@ type AboutFields = {
 
 export type About = MicroCMSObjectContent &
   AboutFields & {
+    nameEn?: string;
+    orgName?: string;
+    orgNameEn?: string;
     workContent?: string;
     workDescription?: string;
     overviewDesc?: string;
@@ -156,6 +162,9 @@ export const getAbout = cache(async (): Promise<About> => {
 
   return {
     ...about,
+    nameEn: about["name-en"],
+    orgName: about["org-name"],
+    orgNameEn: about["org-name-en"],
     workContent: about["work-content"],
     workDescription: about["work-description"],
     overviewDesc: about["overview-desc"],
