@@ -95,11 +95,7 @@ export default function AboutOverlay({ about }: Props) {
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8 sm:px-6">
-          <div
-            className="absolute inset-0 bg-white/80 backdrop-blur"
-            onClick={close}
-            aria-hidden
-          />
+          <div className="absolute inset-0 bg-white/80 backdrop-blur" onClick={close} aria-hidden />
           <article className="relative z-10 max-h-[90vh] w-full max-w-4xl overflow-y-auto border border-white/80 bg-white/95 p-6 shadow-2xl sm:p-10">
             <button
               type="button"
@@ -140,12 +136,8 @@ export default function AboutOverlay({ about }: Props) {
                   <p className="text-xs font-semibold uppercase tracking-[0.4em] text-slate-400">
                     About
                   </p>
-                  <h2 className="text-3xl font-bold text-slate-900">
-                    {about.name}
-                  </h2>
-                  {about.overview && (
-                    <p className="text-sm text-slate-500">{about.overview}</p>
-                  )}
+                  <h2 className="text-3xl font-bold text-slate-900">{about.name}</h2>
+                  {about.overview && <p className="text-sm text-slate-500">{about.overview}</p>}
                 </div>
               </header>
 
@@ -191,9 +183,7 @@ export default function AboutOverlay({ about }: Props) {
                     Studio Info
                   </h3>
                   {about.overview && (
-                    <p className="mt-3 text-sm font-medium text-slate-600">
-                      {about.overview}
-                    </p>
+                    <p className="mt-3 text-sm font-medium text-slate-600">{about.overview}</p>
                   )}
                   {overviewDescContent && (
                     <div className="mt-4 space-y-3 text-sm leading-relaxed text-slate-600 [&_a]:text-blue-600 [&_a]:underline [&_a]:underline-offset-2">

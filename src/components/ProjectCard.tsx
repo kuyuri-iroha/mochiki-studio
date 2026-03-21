@@ -10,10 +10,7 @@ type Props = {
 export default function ProjectCard({ project }: Props) {
   const image = project.mainVisual;
   const description = project.description ? stripHtml(project.description) : "";
-  const aspectRatio =
-    image?.width && image?.height
-      ? `${image.width} / ${image.height}`
-      : "4 / 3";
+  const aspectRatio = image?.width && image?.height ? `${image.width} / ${image.height}` : "4 / 3";
   const dateLabel = project.date
     ? new Date(project.date).toLocaleDateString("ja-JP", {
         year: "numeric",
@@ -27,10 +24,7 @@ export default function ProjectCard({ project }: Props) {
       className="group block border border-white/80 bg-white/95 shadow-sm transition hover:-translate-y-[2px] hover:shadow-lg"
     >
       <article>
-        <div
-          className="relative w-full overflow-hidden bg-white"
-          style={{ aspectRatio }}
-        >
+        <div className="relative w-full overflow-hidden bg-white" style={{ aspectRatio }}>
           {image ? (
             <Image
               src={image.url}

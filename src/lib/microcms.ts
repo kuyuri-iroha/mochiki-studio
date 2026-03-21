@@ -13,9 +13,7 @@ const createMicroCMSClient = () => {
   const apiKey = process.env.APIKEY;
 
   if (!serviceDomain) {
-    throw new Error(
-      "MICROCMS_SERVICE_DOMAIN is not set. Add it to your environment variables."
-    );
+    throw new Error("MICROCMS_SERVICE_DOMAIN is not set. Add it to your environment variables.");
   }
 
   if (!apiKey) {
@@ -50,11 +48,12 @@ type AboutFields = {
   icon?: ImageAsset;
 };
 
-export type About = MicroCMSObjectContent & AboutFields & {
-  workContent?: string;
-  workDescription?: string;
-  overviewDesc?: string;
-};
+export type About = MicroCMSObjectContent &
+  AboutFields & {
+    workContent?: string;
+    workDescription?: string;
+    overviewDesc?: string;
+  };
 
 type ProjectFields = {
   title: string;
@@ -105,20 +104,18 @@ const isNotFoundError = (error: unknown) => {
   return "status" in error && (error as { status?: number }).status === 404;
 };
 
-export const getProjects = cache(
-  async (queries?: MicroCMSQueries): Promise<Project[]> => {
-    const client = getClient();
-    const data: MicroCMSListResponse<ProjectFields> = await client.getList({
-      endpoint: "project",
-      queries: {
-        orders: "-date",
-        ...(queries ?? {}),
-      },
-    });
+export const getProjects = cache(async (queries?: MicroCMSQueries): Promise<Project[]> => {
+  const client = getClient();
+  const data: MicroCMSListResponse<ProjectFields> = await client.getList({
+    endpoint: "project",
+    queries: {
+      orders: "-date",
+      ...(queries ?? {}),
+    },
+  });
 
-    return data.contents.map((content) => normalizeProject(content as ProjectResponse));
-  }
-);
+  return data.contents.map((content) => normalizeProject(content as ProjectResponse));
+});
 
 export const getProjectById = cache(async (id: string): Promise<Project | null> => {
   const client = getClient();

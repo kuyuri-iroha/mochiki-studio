@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "icons": "node scripts/generate-icons.js"
   },
   "dependencies": {
@@ -20,12 +23,15 @@
     "sharp": "^0.33.4"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.5",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.10.1",
     "@types/react": "^19.0.4",
     "@types/react-dom": "^19.0.3",
     "eslint": "^9.13.0",
     "eslint-config-next": "^15.0.3",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.1",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.6.3"
   }
