@@ -26,40 +26,40 @@ export default async function HomePage() {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {heroImages.length > 0 && <HeroSlideshow images={heroImages} />}
 
-        <div className="relative z-20 text-center px-6">
+        <div className="relative z-20 text-center w-[80vw] md:w-[60vw]">
           <h1
             className="text-white font-light tracking-[0.3em] uppercase leading-relaxed"
             style={{ fontFamily: "var(--font-light)" }}
           >
-            <span className="block text-4xl md:text-6xl lg:text-7xl">
+            <span className="block text-[7vw] md:text-[4vw]">
               {about.orgNameEn ?? "MOCHIKI STUDIO"}
             </span>
-            <span className="block text-2xl md:text-4xl lg:text-5xl mt-2">
+            <span className="block text-[5vw] md:text-[3vw] mt-2">
               {about.nameEn ?? "CHIKAKO MOCHIKI"}
             </span>
           </h1>
-          <div className="mx-auto mt-8 w-48 md:w-64 border-t border-white/60" />
+          <div className="mx-auto mt-8 w-[50%] h-[3px] bg-white/60" />
         </div>
       </section>
 
       {/* About Teaser */}
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="glass-panel p-8 md:p-12 rounded-3xl flex flex-col md:flex-row gap-10 items-center">
+          <div className="p-8 md:p-12 rounded-3xl flex flex-col md:flex-row gap-10 items-center">
             {about.icon && (
-              <div className="relative shrink-0 w-32 h-32 md:w-40 md:h-40">
-                <div className="absolute -inset-2 bg-gradient-to-tr from-gray-400 to-gray-600 rounded-full blur-xl opacity-40 animate-pulse" />
+              <div className="relative shrink-0">
                 <Image
                   src={about.icon.url}
                   alt={about.name ?? "Mochiki Studio"}
-                  fill
-                  className="rounded-full object-cover border-2 border-foreground/10 relative z-10"
+                  width={about.icon.width ?? 160}
+                  height={about.icon.height ?? 160}
+                  className="w-32 h-auto md:w-40 object-contain"
                 />
               </div>
             )}
             <div className="text-center md:text-left space-y-4">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                {about.orgName ?? about.name}
+                {about.name}
               </h2>
               {summaryText && (
                 <p className="text-muted-foreground leading-relaxed">
