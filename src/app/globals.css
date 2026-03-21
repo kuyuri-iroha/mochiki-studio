@@ -23,19 +23,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #050505;
-    --foreground: #ededed;
-    --muted: #a3a3a3;
-    --muted-foreground: #a3a3a3;
-    --border: #262626;
-    --card: rgba(255, 255, 255, 0.03);
-    --glass-bg: rgba(5, 5, 5, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.05);
-    --glass-highlight: rgba(255, 255, 255, 0.05);
-  }
-}
 
 body {
   background: var(--background);

@@ -78,7 +78,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                   Project Overview
                 </h2>
                 <div
-                  className="prose prose-lg max-w-none text-muted-foreground dark:prose-invert [&_a]:text-foreground [&_a]:underline [&_a]:underline-offset-2"
+                  className="prose prose-lg max-w-none text-muted-foreground [&_a]:text-foreground [&_a]:underline [&_a]:underline-offset-2"
                   dangerouslySetInnerHTML={{ __html: project.description }}
                 />
               </div>

@@ -1,10 +1,15 @@
-import { getProjects, getAbout } from "@/lib/microcms";
+import { getProjects, getAbout, getHeroImages } from "@/lib/microcms";
 import ProjectCard from "@/components/ProjectCard";
+import HeroSlideshow from "@/components/HeroSlideshow";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function HomePage() {
-  const [projects, about] = await Promise.all([getProjects(), getAbout()]);
+  const [projects, about, heroImages] = await Promise.all([
+    getProjects(),
+    getAbout(),
+    getHeroImages(),
+  ]);
 
   const summaryText = about.description
     ? about.description
@@ -19,6 +24,7 @@ export default async function HomePage() {
     <div className="pb-20">
       {/* Hero Section */}
       <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden border-b border-border">
+        {heroImages.length > 0 && <HeroSlideshow images={heroImages} />}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background z-10 pointer-events-none" />
 
         <div className="relative z-20 text-center max-w-5xl mx-auto px-6 space-y-8">
@@ -62,7 +68,7 @@ export default async function HomePage() {
           <div className="glass-panel p-8 md:p-12 rounded-3xl flex flex-col md:flex-row gap-10 items-center">
             {about.icon && (
               <div className="relative shrink-0 w-32 h-32 md:w-40 md:h-40">
-                <div className="absolute -inset-2 bg-gradient-to-tr from-gray-400 to-gray-600 dark:from-gray-500 dark:to-gray-700 rounded-full blur-xl opacity-40 animate-pulse" />
+                <div className="absolute -inset-2 bg-gradient-to-tr from-gray-400 to-gray-600 rounded-full blur-xl opacity-40 animate-pulse" />
                 <Image
                   src={about.icon.url}
                   alt={about.name ?? "Mochiki Studio"}

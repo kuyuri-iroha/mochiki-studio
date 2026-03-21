@@ -134,6 +134,20 @@ export const getProjectById = cache(async (id: string): Promise<Project | null> 
   }
 });
 
+type HeroImagesFields = {
+  images: ImageAsset[];
+};
+
+export type HeroImages = MicroCMSObjectContent & HeroImagesFields;
+
+export const getHeroImages = cache(async (): Promise<ImageAsset[]> => {
+  const client = getClient();
+  const data = await client.getObject<HeroImagesFields>({
+    endpoint: "hero-images",
+  });
+  return ensureArray(data.images);
+});
+
 export const getAbout = cache(async (): Promise<About> => {
   const client = getClient();
   const about = await client.getObject<AboutFields>({

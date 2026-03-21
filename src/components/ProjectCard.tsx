@@ -14,7 +14,7 @@ export default function ProjectCard({ project }: Props) {
 
   return (
     <Link href={`/projects/${project.id}`} className="group block h-full">
-      <div className="glass-panel rounded-2xl overflow-hidden h-full hover:bg-foreground/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/5 dark:hover:shadow-white/5 flex flex-col border border-border">
+      <div className="glass-panel rounded-2xl overflow-hidden h-full hover:bg-foreground/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/5 flex flex-col border border-border">
         <div className="relative h-56 w-full overflow-hidden">
           {image ? (
             <Image
@@ -26,8 +26,8 @@ export default function ProjectCard({ project }: Props) {
               className="object-cover transition-transform duration-700 group-hover:scale-110"
             />
           ) : (
-            <div className="w-full h-full bg-gray-200 dark:bg-gray-900 flex items-center justify-center">
-              <span className="text-gray-400 dark:text-gray-600 font-mono">NO VISUAL</span>
+            <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+              <span className="text-gray-400 font-mono">NO VISUAL</span>
             </div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-80" />

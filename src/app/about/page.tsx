@@ -19,7 +19,7 @@ export default async function AboutPage() {
         <div className="flex flex-col md:flex-row gap-10 items-start">
           {about.icon && (
             <div className="relative shrink-0">
-              <div className="absolute -inset-1 bg-gradient-to-r from-gray-400 to-gray-600 dark:from-gray-600 dark:to-gray-400 rounded-3xl blur opacity-30" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-gray-400 to-gray-600 rounded-3xl blur opacity-30" />
               <Image
                 src={about.icon.url}
                 alt={about.name ?? "Mochiki Studio"}
