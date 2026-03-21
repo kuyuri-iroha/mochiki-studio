@@ -58,9 +58,7 @@ export default async function HomePage() {
               </div>
             )}
             <div className="text-center md:text-left space-y-4">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                {about.name}
-              </h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">{about.name}</h2>
               {summaryText && (
                 <p className="text-muted-foreground leading-relaxed">
                   {summaryText}

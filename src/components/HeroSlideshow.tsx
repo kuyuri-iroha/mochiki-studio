@@ -29,14 +29,7 @@ export default function HeroSlideshow({ images }: Props) {
           className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
           style={{ opacity: index === current ? 1 : 0 }}
         >
-          <Image
-            src={image.url}
-            alt=""
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-          />
+          <Image src={image.url} alt="" fill priority className="object-cover" sizes="100vw" />
         </div>
       ))}
       <div className="absolute inset-0 bg-black/30" />
