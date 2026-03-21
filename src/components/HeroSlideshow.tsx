@@ -33,7 +33,7 @@ export default function HeroSlideshow({ images }: Props) {
             src={image.url}
             alt=""
             fill
-            priority={index === 0}
+            priority
             className="object-cover"
             sizes="100vw"
           />
