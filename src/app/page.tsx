@@ -26,19 +26,19 @@ export default async function HomePage() {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {heroImages.length > 0 && <HeroSlideshow images={heroImages} />}
 
-        <div className="relative z-20 text-center w-[80vw] md:w-[60vw]">
+        <div className="relative z-20 text-center w-[80vw]">
           <h1
-            className="text-white font-light tracking-[0.3em] uppercase leading-relaxed"
+            className="text-white font-light tracking-[0.3em] uppercase leading-[1.3]"
             style={{ fontFamily: "var(--font-light)" }}
           >
-            <span className="block text-[7vw] md:text-[4vw]">
+            <span className="block text-[7vw] md:text-[5vw]">
               {about.orgNameEn ?? "MOCHIKI STUDIO"}
             </span>
-            <span className="block text-[5vw] md:text-[3vw] mt-2">
+            <span className="block text-[5vw] md:text-[3.5vw]">
               {about.nameEn ?? "CHIKAKO MOCHIKI"}
             </span>
           </h1>
-          <div className="mx-auto mt-8 w-[50%] h-[3px] bg-white/60" />
+          <div className="mx-auto mt-4 md:mt-8 w-[50%] h-[2px] md:h-[3px] bg-white/60" />
         </div>
       </section>
 
