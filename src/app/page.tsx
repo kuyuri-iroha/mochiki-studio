@@ -1,8 +1,9 @@
 import { getProjects, getAbout, getHeroImages } from "@/lib/microcms";
-import ProjectCard from "@/components/ProjectCard";
 import HeroSlideshow from "@/components/HeroSlideshow";
+import ProjectsFilter from "@/components/ProjectsFilter";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default async function HomePage() {
   const [projects, about, heroImages] = await Promise.all([
@@ -77,26 +78,9 @@ export default async function HomePage() {
       </section>
 
       {/* Projects Grid */}
-      <section id="projects" className="max-w-7xl mx-auto px-6">
-        <div className="mb-12 flex items-end justify-between border-b border-border pb-6">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">Selected Works</h2>
-            <p className="text-muted-foreground text-sm">Recent projects & collaborations</p>
-          </div>
-        </div>
-
-        {projects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20 bg-card rounded-3xl border border-border">
-            <p className="text-muted-foreground">プロジェクトがありません</p>
-          </div>
-        )}
-      </section>
+      <Suspense fallback={null}>
+        <ProjectsFilter projects={projects} />
+      </Suspense>
     </div>
   );
 }
