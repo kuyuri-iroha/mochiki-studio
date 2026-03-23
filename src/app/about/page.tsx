@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import parse from "html-react-parser";
 import { getAbout } from "@/lib/microcms";
 
@@ -63,12 +64,13 @@ export default async function AboutPage() {
             {workContentItems.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-6">
                 {workContentItems.map((item: string) => (
-                  <span
+                  <Link
                     key={item}
-                    className="px-3 py-1 bg-foreground/5 text-foreground/80 text-sm rounded-full border border-border font-medium"
+                    href={`/?genre=${encodeURIComponent(item)}#projects`}
+                    className="px-3 py-1 bg-foreground/5 text-foreground/80 text-sm rounded-full border border-border font-medium hover:bg-foreground hover:text-background transition-colors"
                   >
                     {item}
-                  </span>
+                  </Link>
                 ))}
               </div>
             )}
