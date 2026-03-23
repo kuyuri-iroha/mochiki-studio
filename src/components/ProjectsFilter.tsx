@@ -19,7 +19,7 @@ export default function ProjectsFilter({ projects }: Props) {
   }, [projects]);
 
   const [selectedGenre, setSelectedGenre] = useState<string | null>(
-    genreParam && genres.includes(genreParam) ? genreParam : null,
+    genreParam && genres.includes(genreParam) ? genreParam : null
   );
   const [visible, setVisible] = useState(true);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -33,11 +33,8 @@ export default function ProjectsFilter({ projects }: Props) {
   }, [genreParam, genres]);
 
   const filteredProjects = useMemo(
-    () =>
-      selectedGenre
-        ? projects.filter((p) => p.genre?.includes(selectedGenre))
-        : projects,
-    [projects, selectedGenre],
+    () => (selectedGenre ? projects.filter((p) => p.genre?.includes(selectedGenre)) : projects),
+    [projects, selectedGenre]
   );
 
   const handleGenreClick = useCallback(
@@ -51,19 +48,15 @@ export default function ProjectsFilter({ projects }: Props) {
         timerRef.current = null;
       }, 500);
     },
-    [selectedGenre],
+    [selectedGenre]
   );
 
   return (
     <section id="projects" className="max-w-7xl mx-auto px-6">
       <div className="mb-12 flex items-end justify-between border-b border-border pb-6">
         <div>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-            Selected Works
-          </h2>
-          <p className="text-muted-foreground text-sm">
-            Recent projects &amp; collaborations
-          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">Selected Works</h2>
+          <p className="text-muted-foreground text-sm">Recent projects &amp; collaborations</p>
         </div>
       </div>
 
@@ -109,9 +102,7 @@ export default function ProjectsFilter({ projects }: Props) {
           </div>
         ) : (
           <div className="text-center py-20 bg-card rounded-3xl border border-border">
-            <p className="text-muted-foreground">
-              該当するプロジェクトがありません
-            </p>
+            <p className="text-muted-foreground">該当するプロジェクトがありません</p>
           </div>
         )}
       </div>

@@ -29,6 +29,7 @@ desktop.ini
 
 # agent
 .agent/
+.superpowers/
 
 # misc
 ~$*
