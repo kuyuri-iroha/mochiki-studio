@@ -27,10 +27,16 @@ export default function ProjectsFilter({ projects }: Props) {
   useEffect(() => {
     if (genreParam && genres.includes(genreParam)) {
       setSelectedGenre(genreParam);
-    } else if (!genreParam) {
+    } else {
       setSelectedGenre(null);
     }
   }, [genreParam, genres]);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const filteredProjects = useMemo(
     () => (selectedGenre ? projects.filter((p) => p.genre?.includes(selectedGenre)) : projects),
@@ -65,6 +71,7 @@ export default function ProjectsFilter({ projects }: Props) {
         <div className="flex flex-wrap gap-2 mb-8">
           <button
             onClick={() => handleGenreClick(null)}
+            aria-pressed={selectedGenre === null}
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
               selectedGenre === null
                 ? "bg-foreground text-background"
@@ -77,6 +84,7 @@ export default function ProjectsFilter({ projects }: Props) {
             <button
               key={genre}
               onClick={() => handleGenreClick(genre)}
+              aria-pressed={selectedGenre === genre}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
                 selectedGenre === genre
                   ? "bg-foreground text-background"
