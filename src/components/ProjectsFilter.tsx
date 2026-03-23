@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import ProjectCard from "@/components/ProjectCard";
 import { Project } from "@/lib/microcms";
@@ -15,17 +15,20 @@ export default function ProjectsFilter({ projects }: Props) {
 
   const genres = useMemo(() => {
     const allGenres = projects.flatMap((p) => p.genre ?? []);
-    return [...new Set(allGenres)];
+    return [...new Set(allGenres)].sort();
   }, [projects]);
 
   const [selectedGenre, setSelectedGenre] = useState<string | null>(
     genreParam && genres.includes(genreParam) ? genreParam : null,
   );
   const [visible, setVisible] = useState(true);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (genreParam && genres.includes(genreParam)) {
       setSelectedGenre(genreParam);
+    } else if (!genreParam) {
+      setSelectedGenre(null);
     }
   }, [genreParam, genres]);
 
@@ -40,10 +43,12 @@ export default function ProjectsFilter({ projects }: Props) {
   const handleGenreClick = useCallback(
     (genre: string | null) => {
       if (genre === selectedGenre) return;
+      if (timerRef.current) clearTimeout(timerRef.current);
       setVisible(false);
-      setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         setSelectedGenre(genre);
         setVisible(true);
+        timerRef.current = null;
       }, 500);
     },
     [selectedGenre],
